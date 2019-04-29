@@ -1,7 +1,15 @@
 import java.util.ArrayList;
 
 public class Usuario {
-	private String nombre;
+	private String nombre, clave;
+	public String getClave() {
+		return clave;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+
 	private String tipo;
 	private ArrayList<Oferta> ofertas=new ArrayList<>();
 	
