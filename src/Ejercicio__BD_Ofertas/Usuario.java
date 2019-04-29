@@ -4,9 +4,21 @@ import java.util.ArrayList;
 
 public class Usuario {
 
-	private String nombre;
+	private String nombre,clave;
 	private ArrayList<Oferta> ofertas=new ArrayList<>();
 	private String tipo;
+	
+	
+	public String getClave() {
+		return clave;
+	}
+
+
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+
+	
 	
 	//Constructor de la clase Usuario.
 	public Usuario() {
