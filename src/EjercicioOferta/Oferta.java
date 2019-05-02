@@ -1,3 +1,4 @@
+package EjercicioOferta;
 import java.sql.Date;
 
 public class Oferta {
