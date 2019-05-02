@@ -1,6 +1,7 @@
 package Ejercicio__BD_Ofertas;
 
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class Ejercicio1Vicente {
 					//HACEMOS LOS MISMO CON LA FECHA FIN.
 					System.out.println("Fecha FIN: (yyyymmdd)");
 					 fecha=df.parse(leer.nextLine());
-					o.setFechaI(new Date(fecha.getTime()));
+					o.setFechaF(new Date(fecha.getTime()));
 					
 					o.setEstablec(u.getNombre());
 					System.out.println("Descripcion de la oferta: ");
@@ -121,16 +122,55 @@ public class Ejercicio1Vicente {
 					System.err.println("FORMATO DE FECHA INCORRECTO.");
 				}
 				break;
+				
 			case 2:
+				bd.mostrarOfertas(u.getNombre());
+				System.out.println("Introduce el id de la oferta: ");
+				o=new Oferta();
+				o.setId(leer.nextInt());leer.nextLine();
+				//Pedimos nuevos datos.
+				try {
+					System.out.println("Fecha Inicio: (yyyymmdd)");
+					java.util.Date fecha=df.parse(leer.nextLine());
+					o.setFechaI(new Date(fecha.getTime()));
+					
+					//HACEMOS LOS MISMO CON LA FECHA FIN.
+					System.out.println("Fecha FIN: (yyyymmdd)");
+					 fecha=df.parse(leer.nextLine());
+					o.setFechaF(new Date(fecha.getTime()));
+					
+					//Pedimos la descripcion.
+					System.out.println("Descripcion de la oferta: ");
+					o.setDescrip(leer.nextLine());
+					
+					if(!bd.modificarOfertas(o,u.getNombre())) {
+						System.err.println("ERROR AL MODIFICAR LA OFERTA.");
+					}
+					
+				}catch(ParseException e) {
+					System.err.println("FORMATO DE FECHA INCORRECTO.");
+				}
 				break;
+				
 			case 3:
+				
+				bd.mostrarOfertas(u.getNombre());
+				System.out.println("Introduce el id de la oferta que vayas a borrar: ");
+				o=new Oferta();
+				o.setId(leer.nextInt());leer.nextLine();
+				if(!bd.borrarOferta(o,u.getNombre())) {
+					System.err.println("ERROR AL BORRAR LA OFERTA");
+				}
 				break;
+				
 			case 4:
+				bd.mostrarOfertas(u.getNombre());
 				break;
 			}
 			
 		}while(opcion!=0);
 	}
+
 
 	private static void menuAdmin() {
 		// SU MENU PUEDE HACER ALTA DE USUARIOS.
