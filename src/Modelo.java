@@ -156,6 +156,72 @@ public class Modelo {
 		}
 		return resultado;
 	}
+
+	public boolean altaOferta(Oferta o) {
+		// TODO Auto-generated method stub
+		boolean resultado = false;
+		try {
+			PreparedStatement consulta = conexion.prepareStatement(
+					"insert into ofertas values (null,?,?,?,?)");
+			consulta.setDate(1, o.getFechaI());
+			consulta.setDate(2, o.getFechaF());
+			consulta.setString(3, o.getEstablec());
+			consulta.setString(4, o.getDescrip());
+			int r = consulta.executeUpdate();
+			if(r==1) {
+				resultado=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+
+	public boolean modificarOferta(Oferta o, String nombre) {
+		// TODO Auto-generated method stub
+		boolean resultado=false;
+		try {
+			PreparedStatement consulta = conexion.prepareStatement(
+					"update ofertas set "
+					+ "fechaI = ?, fechaF = ?, descrip = ? "
+					+ "where id = ? and "
+					+ "establec = ?");
+			consulta.setDate(1, o.getFechaI());
+			consulta.setDate(2, o.getFechaF());
+			consulta.setString(3, o.getDescrip());
+			consulta.setInt(4, o.getId());
+			consulta.setString(5, nombre);
+			
+			int r = consulta.executeUpdate();
+			if(r==1) {
+				resultado = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+
+	public boolean borrarOferta(Oferta o, String nombre) {
+		// TODO Auto-generated method stub
+		boolean resultado = false;
+		try {
+			PreparedStatement consulta = conexion.prepareStatement(
+					"delete from ofertas where id = ? and establec = ?");
+			consulta.setInt(1, o.getId());
+			consulta.setString(2, nombre);
+			int r = consulta.executeUpdate();
+			if(r==1) {
+				resultado = true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultado;
+	}
 	
 	
 }

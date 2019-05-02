@@ -112,13 +112,43 @@ public class Ejercicio1 {
 				
 				break;
 			case 2:
-				
+				bd.mostrarOfertas(u.getNombre());
+				System.out.println("Introduce id oferta");
+				o = new Oferta();
+				o.setId(t.nextInt()); t.nextLine();
+				//Pedimos nuevos datos
+				try {
+					System.out.println("Fecha Inicio (yyyymmdd)");
+					java.util.Date fecha = df.parse(t.nextLine());
+					o.setFechaI(new Date(fecha.getTime()));
+					
+					System.out.println("Fecha Fin (yyyymmdd)");
+					fecha = df.parse(t.nextLine());
+					o.setFechaF(new Date(fecha.getTime()));
+					
+					System.out.println("Descripción de la oferta");
+					o.setDescrip(t.nextLine());
+					
+					if(!bd.modificarOferta(o,u.getNombre())) {
+						System.out.println("Error al modificar la oferta");
+					}
+				}
+				catch (ParseException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Formato de fecha incorrecto");
+				}
 				break;
 			case 3:
-					
+				bd.mostrarOfertas(u.getNombre());
+				System.out.println("Introduce el id de la oferta a borrar");
+				o=new Oferta();
+				o.setId(t.nextInt());t.nextLine();
+				if(!bd.borrarOferta(o,u.getNombre())) {
+					System.out.println("Error al borrar la oferta");
+				}
 				break;
 			case 4:
-				
+				bd.mostrarOfertas(u.getNombre());
 				break;
 			}
 			
