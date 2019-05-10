@@ -25,8 +25,8 @@ public class Principal {
 				System.out.println("1-Alta Medicamento.");
 				System.out.println("2-Mostrar Medicamentos.");
 				System.out.println("3-Alta Venta.");
-				System.out.println("4-Mostrar Ventas.");
-				System.out.println("5-Mostrar Pedido.");
+				System.out.println("4-Entrega Pedido.");
+				
 				opcion=leer.nextInt();leer.nextLine();
 				Medicamento m;
 				
@@ -63,11 +63,50 @@ public class Principal {
 					break;
 				case 2:
 					//Mostramos los datos del medicamento.
-					bd.mostrarMedicamentos();
+					bd.mostrarMedicamentos(true);
 					break;
 				case 3:
+					bd.mostrarMedicamentos(false);
+					
+					m=new Medicamento();
+					System.out.println("Introduce el codigo del medicamento: ");
+					m.setId(leer.nextInt());leer.nextLine();
+					//Obtenemos los datos de los medicamentos que se van a vender.
+					m=bd.obtnerMedicamento(m.getId());
+					if(m==null) {
+						System.err.println("ERROR: EL MEDICAMENTO NO EXISTE.");
+					}else {
+						//Comprobamos si hay stock.
+						System.out.println("Introduce la cantidad que va a retirar: ");
+						int cantidad=leer.nextInt();leer.nextLine();
+						if(m.getStockReal()>=cantidad) {
+							
+							if(!bd.altaVenta(m,cantidad)) {
+								System.err.println("ERROR: No se ha podido realizar la venta.");
+							}else {
+								if(m.getStockReal()-cantidad>=m.getStockMin()) {
+									
+									if(!bd.altaPedido(m,cantidad)) {
+										System.err.println("ERROR: No se ha podido hacer el pedido.");
+									}
+								}
+						}
+					}
+						else {
+							System.err.println("ERROR: No hay cantidad suficiente de stock.");
+						}
+							
+				}
 					break;
 				case 4:
+					
+					bd.obtenerPedido();
+					System.out.println("Introduce el codigo del pedido: ");
+					int codigo=leer.nextInt();leer.nextLine();
+					if(!bd.entregarPedido(codigo)) {
+						System.err.println("ERROR: al marcar el pedido como entregado.");
+					}
+					
 					break;
 				}
 				
