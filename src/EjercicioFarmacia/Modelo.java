@@ -252,7 +252,7 @@ public class Modelo {
 		boolean resultado = false;
 		try {
 			PreparedStatement consulta = conexion.prepareStatement(
-					"insert into pedido values(null,?,?,?)");
+					"insert into pedido values(null,?,?,?,false)");
 			consulta.setDate(1, new Date(new java.util.Date().getTime()));
 			consulta.setInt(2, m.getStockMax()-(m.getStockReal()-cantidad));
 			consulta.setInt(3, m.getId());
@@ -312,8 +312,9 @@ public class Modelo {
 							"update medicamento "
 							+ "set stockReal = stockReal + ? "
 							+ "where codigo = ?");
-					consulta.setInt(1, rInfo.getInt(4));
-					consulta.setInt(2, rInfo.getInt(5));
+					consulta.setInt(1, rInfo.getInt(3));
+					consulta.setInt(2, rInfo.getInt(4));
+					r=consulta.executeUpdate();
 					if(r==1) {
 						resultado=true;
 					}
